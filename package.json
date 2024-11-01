@@ -1,0 +1,27 @@
+{
+  "name": "hello-world-required",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/app.js",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node src/app.js",
+    "pm2-start": "pm2 start src/app.js",
+    "pm2-list": "pm2 list",
+    "pm2-logs": "pm2 logs",
+    "pm2-monit": "pm2 monit",
+    "pm2-stop": "pm2 stop all"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "rebilly-js-sdk": "^56.54.3",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
