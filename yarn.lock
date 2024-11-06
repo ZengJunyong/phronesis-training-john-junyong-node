@@ -595,9 +595,9 @@ readdirp@~3.6.0:
     picomatch "^2.2.1"
 
 rebilly-js-sdk@^56.54.3:
-  version "56.61.1"
-  resolved "https://registry.yarnpkg.com/rebilly-js-sdk/-/rebilly-js-sdk-56.61.1.tgz#98a26a2f2b268eb9e96988448bf41b0d91615a3b"
-  integrity sha512-6YxTCmDMkm/8JXE/4K9XsHoktXetbVWbPA5fqqvkZtq3MSCx+2OX7gt0ev9Tp8Rs5Xc2XN4swdSb/TKvtsXwmQ==
+  version "56.64.0"
+  resolved "https://registry.yarnpkg.com/rebilly-js-sdk/-/rebilly-js-sdk-56.64.0.tgz#599e51114a79c60b8ebe3dce056eb524ab4b4d4e"
+  integrity sha512-35v86tvGlIwVpC8pVm3mMC7dage/umv0aX34C30FLKUjGtGGBCQ2bvkBHWGnq4a9Wz2RNXmgOiXseNe9pSdkLQ==
   dependencies:
     axios "^1.7.7"
     nanoid "^5.0.7"
