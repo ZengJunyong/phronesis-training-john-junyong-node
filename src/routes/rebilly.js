@@ -101,4 +101,59 @@ router.post('/deposit-with-strategy', async (req, res) => {
     }
 });
 
+router.post('/payout-request', async (req, res) => {
+    const { amount, currency } = req.body;
+    const customerId = 'cus_01JBEA7J0YR58WCC06R0TAPCE5';
+    try {
+        const {fields: {token: exchangeToken}} = await api.customerAuthentication.login({
+            data: {
+                mode: "passwordless",
+                customerId,
+            },
+        });
+        const {fields: {token}} = await api.customerAuthentication.exchangeToken({
+            token: exchangeToken,
+            data: {
+                acl: [
+                    {
+                        scope: {
+                            organizationId: [REBILLY_ORGANIZATION_ID],
+                        },
+                        permissions: [
+                            "PostToken",
+                            "StorefrontGetPaymentInstrumentCollection",
+                            "StorefrontPostPaymentInstrument",
+                            "StorefrontGetPaymentInstrument",
+                            "StorefrontPatchPaymentInstrument",
+                            "StorefrontGetAccount",
+                            "StorefrontGetWebsite",
+                            "StorefrontPostReadyToPay",
+                            "StorefrontGetPayoutRequestCollection",
+                            "StorefrontGetPayoutRequest",
+                            "StorefrontPatchPayoutRequest",
+                            "StorefrontPostReadyToPayout",
+
+                        ],
+                    },
+                ],
+                customClaims: {
+                    websiteId: REBILLY_WEBSITE_ID,
+                },
+            },
+        });
+        const {fields: {id: payoutRequestId}} = await api.payoutRequests.create({
+            data: {
+                websiteId: REBILLY_WEBSITE_ID,
+                customerId,
+                currency,
+                amount,
+            },
+        });
+        res.json({token, payoutRequestId});
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"error": err.message});
+    }
+});
+
 export default router;
