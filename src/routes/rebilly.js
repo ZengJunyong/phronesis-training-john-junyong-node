@@ -156,4 +156,29 @@ router.post('/payout-request', async (req, res) => {
     }
 });
 
+router.post('/deposit-enhanced', async (req, res) => {
+    const customerId = 'cus_01JFENNP0FD5Y4T67K2A4NBAQA';
+    const { currency } = req.body;
+
+    try {
+        const response = await api.depositRequests.create({
+            data: {
+                websiteId: REBILLY_WEBSITE_ID,
+                customerId,
+                currency,
+            }
+        });
+        const token = response.fields.cashierToken;
+        res.send({ token });
+    } catch (error) {
+        // Log any errors that occur.
+        if (error?.response?.data) {
+            console.error(error.response.data);
+        } else {
+            console.error(error);
+        }
+    }
+});
+
+
 export default router;
