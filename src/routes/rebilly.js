@@ -3,8 +3,8 @@ import express from 'express';
 import RebillyAPI from 'rebilly-js-sdk';
 
 const REBILLY_API_SECRET_KEY = process.env.API_KEY;
-const REBILLY_WEBSITE_ID = "casino-deposit-form";
-const REBILLY_ORGANIZATION_ID = 'phoronesis-john-junyong';
+const REBILLY_WEBSITE_ID = "test.com";
+const REBILLY_ORGANIZATION_ID = 'org_01JNN4CS8FMV6ZPFYD439YPMFW';
 const api = RebillyAPI({
     sandbox: true,
     organizationId: REBILLY_ORGANIZATION_ID,
@@ -166,6 +166,42 @@ router.post('/deposit-enhanced', async (req, res) => {
                 websiteId: REBILLY_WEBSITE_ID,
                 customerId,
                 currency,
+            }
+        });
+        const token = response.fields.cashierToken;
+        res.send({ token });
+    } catch (error) {
+        // Log any errors that occur.
+        if (error?.response?.data) {
+            console.error(error.response.data);
+        } else {
+            console.error(error);
+        }
+    }
+});
+
+router.post('/create-deposit-request-project-29', async (req, res) => {
+    const customerId = 'junyong-project29';
+    const { currency } = req.body;
+
+    try {
+        const response = await api.depositRequests.create({
+            data: {
+                websiteId: REBILLY_WEBSITE_ID,
+                customerId,
+                currency,
+                "amounts": [
+                    5, 10, 25, 50, 100
+                ],
+                "customAmount": {
+                    "minimum": 10,
+                    "multipleOf": 0.01,
+                    "maximum": 10000
+                },
+                // "amountLimits": {
+                //     "minimum": 10,
+                //     "maximum": 10000,
+                // },
             }
         });
         const token = response.fields.cashierToken;
