@@ -4,7 +4,7 @@ import RebillyAPI from 'rebilly-js-sdk';
 
 const REBILLY_API_SECRET_KEY = process.env.API_KEY;
 const REBILLY_WEBSITE_ID = "test.com";
-const REBILLY_ORGANIZATION_ID = 'org_01JNN4CS8FMV6ZPFYD439YPMFW';
+const REBILLY_ORGANIZATION_ID = 'phronesis-arman-junyong';
 const api = RebillyAPI({
     sandbox: true,
     organizationId: REBILLY_ORGANIZATION_ID,
@@ -207,6 +207,28 @@ router.post('/create-deposit-request-project-29', async (req, res) => {
         });
         const token = response.fields.cashierToken;
         res.send({ token });
+    } catch (error) {
+        // Log any errors that occur.
+        if (error?.response?.data) {
+            console.error(error.response.data);
+        } else {
+            console.error(error);
+        }
+    }
+});
+
+router.post('/create-cashier-project-54', async (req, res) => {
+    const { currency } = req.body;
+    try {
+        const response =  await api.cashiers.create({
+            data: {
+                websiteId: 'phronesis-arman-junyong.com',
+                customerId: "cus_01K3QZKRNHHS6JJYZND7FM3MZ1",
+                currency,
+            },
+        });
+        const {cashierToken} = response.fields;
+        res.send({ cashierToken });
     } catch (error) {
         // Log any errors that occur.
         if (error?.response?.data) {
